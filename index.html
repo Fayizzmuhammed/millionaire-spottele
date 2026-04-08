@@ -617,10 +617,12 @@ document.addEventListener("DOMContentLoaded", function() {
   function update() {
     var remaining = endTime - Date.now();
     if (remaining <= 0) {
-      countdown.textContent = '00:00';
-      label.textContent = '❌ OFFER ENDED!';
-      bar.classList.add('expired');
-      return;
+      // Reset: start a fresh 10-minute countdown
+      endTime = Date.now() + DURATION;
+      localStorage.setItem(TIMER_KEY, endTime);
+      bar.classList.remove('expired');
+      label.textContent = '⚠️ HURRY UP!';
+      remaining = DURATION;
     }
     var mins = Math.floor(remaining / 60000);
     var secs = Math.floor((remaining % 60000) / 1000);
